@@ -13,7 +13,7 @@ const Chat = () => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('http://localhost:5153/chat', HttpTransportType.LongPolling)
+            .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.WebSockets}  )
             .withAutomaticReconnect()
             .build();
 
@@ -26,7 +26,7 @@ const Chat = () => {
                 .then(result => {
                     console.log('Connected!');
     
-                    connection.on('ReceiveMessage', message => {
+                    connection.on('broadcastMessage', message => {
                         const updatedChat = [...latestChat.current];
                         updatedChat.push(message);
                     
@@ -39,13 +39,13 @@ const Chat = () => {
 
     const sendMessage = async (user, message) => {
         const chatMessage = {
-            user: user,
+            name: user,
             message: message
         };
 
-        if (connection.connectionStarted) {
+        if (connection._connectionStarted) {
             try {
-                await connection.send('SendMessage', chatMessage);
+                await connection.send('send', chatMessage);
             }
             catch(e) {
                 console.log(e);
