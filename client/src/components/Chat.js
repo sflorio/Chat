@@ -13,7 +13,7 @@ const Chat = () => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.WebSockets}  )
+            .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.LongPolling}  )
             .withAutomaticReconnect()
             .build();
 

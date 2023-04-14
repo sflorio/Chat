@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Chat.Api.Models;
 
 namespace Chat.Api.Hubs
 {
@@ -12,10 +13,4 @@ namespace Chat.Api.Hubs
             await Clients.All.SendAsync("broadcastMessage", message);
         }
     }
-
-    public class ChatMessage { 
-        public string Name { get; set; }
-        public string Message { get; set; }
-    }
-
 }
