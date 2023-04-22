@@ -1,64 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { HubConnectionBuilder, HttpTransportType } from '@microsoft/signalr';
-
+import {signalRService} from '../services/SignalRService'
 import ChatWindow from './ChatWindow';
 import ChatInput from './ChatInput';
 
 const Chat = () => {
-    const [ connection, setConnection ] = useState(null);
     const [ chat, setChat ] = useState([]);
     const latestChat = useRef(null);
+    const service = new signalRService();
 
     latestChat.current = chat;
 
     useEffect(() => {
-        const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.LongPolling}  )
-            .withAutomaticReconnect()
-            .build();
+        service.recibirMensajes(message => {
+            const updatedChat = [...latestChat.current];
+            updatedChat.push(message);
+        
+            setChat(updatedChat);
+        })
 
-        setConnection(newConnection);
-    }, []);
-
-    useEffect(() => {
-        if (connection) {
-            connection.start()
-                .then(result => {
-                    console.log('Connected!');
-    
-                    connection.on('broadcastMessage', message => {
-                        const updatedChat = [...latestChat.current];
-                        updatedChat.push(message);
-                    
-                        setChat(updatedChat);
-                    });
-                })
-                .catch(e => console.log('Connection failed: ', e));
-        }
-    }, [connection]);
-
-    const sendMessage = async (user, message) => {
-        const chatMessage = {
-            name: user,
-            message: message
-        };
-
-        if (connection._connectionStarted) {
-            try {
-                await connection.send('send', chatMessage);
-            }
-            catch(e) {
-                console.log(e);
-            }
-        }
-        else {
-            alert('No connection to server yet.');
-        }
-    }
+    }, [service.connection]);
 
     return (
         <div>
-            <ChatInput sendMessage={sendMessage} />
+            <ChatInput sendMessage={service.enviarMensajes} />
             <hr />
             <ChatWindow chat={chat}/>
         </div>
