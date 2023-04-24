@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.chat-container{
+  height: 700px;
+  border: 1px solid;
+  overflow-y: scroll;
+}
+
+.message { 
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.message-input {
+  width: 80%;
+  min-height: 50px;
+}
+
+.send-button {
+  width: fit-content;
+  min-height: 50px;
+}
+
+.message-input-container {
+  display: flex;
+
+}

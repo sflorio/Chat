@@ -4,7 +4,7 @@ import { HubConnectionBuilder, HttpTransportType } from '@microsoft/signalr';
 export class signalRService  {
     constructor() {
         this.connection = new HubConnectionBuilder()
-        .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.LongPolling}  )
+        .withUrl('https://localhost:7112/chatHub', {transport: HttpTransportType.WebSockets}  )
         .withAutomaticReconnect()
         .build();
     }

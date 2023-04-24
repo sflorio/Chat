@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 
-const ChatInput = (props) => {
-    const [user, setUser] = useState('');
+const MessageInput = (props) => {
     const [message, setMessage] = useState('');
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const isUserProvided = user && user !== '';
+        const isUserProvided = props.user && props.user !== '';
         const isMessageProvided = message && message !== '';
 
         if (isUserProvided && isMessageProvided) {
-            props.sendMessage(user, message);
+            props.sendMessage(props.user, message);
+            setMessage('')
         } 
         else {
             alert('Por favor inserte un usuario y mensaje.');
         }
-    }
-
-    const onUserUpdate = (e) => {
-        setUser(e.target.value);
     }
 
     const onMessageUpdate = (e) => {
@@ -28,27 +24,22 @@ const ChatInput = (props) => {
 
     return (
         <form 
-            onSubmit={onSubmit}>
-            <label htmlFor="user">User:</label>
-            <br />
-            <input 
-                id="user" 
-                name="user" 
-                value={user}
-                onChange={onUserUpdate} />
-            <br/>
+            onSubmit={onSubmit}>            
             <label htmlFor="message">Mensaje:</label>
             <br />
-            <input 
-                type="text"
+            <div className='message-input-container'>
+            <textarea                 
                 id="message"
-                name="message" 
+                name="message"
+                className='message-input' 
                 value={message}
                 onChange={onMessageUpdate} />
-            <br/><br/>
-            <button>Enviar</button>
+           
+            <button className='send-button'>Enviar</button>
+            </div>
+            
         </form>
     )
 };
 
-export default ChatInput;
+export default MessageInput;

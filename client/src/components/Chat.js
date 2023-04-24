@@ -1,30 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {signalRService} from '../services/SignalRService'
 import ChatWindow from './ChatWindow';
-import ChatInput from './ChatInput';
+import MessageInput from './MessageInput';
+import UserInput from './UserInput';
 
 const Chat = () => {
+    const [user, setUser] = useState('');
+    const [service, setService] = useState(new signalRService());
     const [ chat, setChat ] = useState([]);
     const latestChat = useRef(null);
-    const service = new signalRService();
 
     latestChat.current = chat;
 
     useEffect(() => {
         service.recibirMensajes(message => {
             const updatedChat = [...latestChat.current];
-            updatedChat.push(message);
-        
-            setChat(updatedChat);
+            if(message.name != user){
+                updatedChat.push(message);
+                setChat(updatedChat);
+            }
         })
 
     }, [service.connection]);
 
     return (
         <div>
-            <ChatInput sendMessage={service.enviarMensajes} />
-            <hr />
+            <UserInput user={user} setUser={setUser} />
+            <hr/>
             <ChatWindow chat={chat}/>
+            <hr />
+            <MessageInput user={user} sendMessage={service.enviarMensajes} />
         </div>
     );
 };

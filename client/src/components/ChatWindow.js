@@ -10,7 +10,7 @@ const ChatWindow = (props) => {
             message={m.message}/>);
 
     return(
-        <div>
+        <div className='chat-container'>
             {chat}
         </div>
     )
