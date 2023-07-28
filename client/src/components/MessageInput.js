@@ -10,7 +10,8 @@ const MessageInput = (props) => {
         const isMessageProvided = message && message !== '';
 
         if (isUserProvided && isMessageProvided) {
-            props.sendMessage(props.user, message);
+            props.sendMessage(props.user, message, () => {props.onSucced({ name: props.user, message: message })});
+            
             setMessage('')
         } 
         else {
@@ -23,8 +24,7 @@ const MessageInput = (props) => {
     }
 
     return (
-        <form 
-            onSubmit={onSubmit}>            
+        <form>            
             <label htmlFor="message">Mensaje:</label>
             <br />
             <div className='message-input-container'>
@@ -35,7 +35,7 @@ const MessageInput = (props) => {
                 value={message}
                 onChange={onMessageUpdate} />
            
-            <button className='send-button'>Enviar</button>
+            <button className='send-button' onClick={onSubmit} >Enviar</button>
             </div>
             
         </form>
