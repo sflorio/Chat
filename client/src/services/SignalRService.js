@@ -2,11 +2,16 @@
 import { HubConnectionBuilder, HttpTransportType } from '@microsoft/signalr';
 
 export class signalRService  {
-    constructor() {
+    constructor(transportProtocol) {
         this.connection = new HubConnectionBuilder()
-        .withUrl('https://localhost:44357/chatHub', {transport: HttpTransportType.LongPolling}  )
+        .withUrl('https://localhost:44357/chatHub', {transport: transportProtocol}  )
         .withAutomaticReconnect()
         .build();
+    }
+
+    connect = async () => {
+        if(!this.connection._connectionStarted)
+            return this.connection.start()
     }
 
     enviarMensajes = async (user, message, onSucced) => {
@@ -31,6 +36,18 @@ export class signalRService  {
         }
     }
 
+
+    enviarMensajesAsync =  (user, message) => {
+        const chatMessage = {
+            name: user,
+            message: message
+        };
+
+        return new Promise(async (resolve) =>{
+            await this.connection.send('send', chatMessage);
+            return resolve();
+        })         
+    }
 
     recibirMensajes = (messageHandler) => {
         if (this.connection) {
