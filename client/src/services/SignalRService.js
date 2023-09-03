@@ -4,7 +4,7 @@ import { HubConnectionBuilder, HttpTransportType } from '@microsoft/signalr';
 export class signalRService  {
     constructor(transportProtocol) {
         this.connection = new HubConnectionBuilder()
-        .withUrl('https://localhost:44357/chatHub', {transport: transportProtocol}  )
+        .withUrl('https://localhost:7112/chatHub', {transport: transportProtocol}  )
         .withAutomaticReconnect()
         .build();
     }

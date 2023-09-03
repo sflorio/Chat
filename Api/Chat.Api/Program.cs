@@ -16,9 +16,7 @@ builder.Services.AddCors(options =>
                           .WithOrigins("https://localhost:3000", "https://172.25.240.1:3000")
                            .AllowAnyHeader()
                            .AllowAnyMethod()
-                           //.SetIsOriginAllowed((host) => true)
                            .AllowCredentials();
-
                       });
 });
 
@@ -29,6 +27,8 @@ var app = builder.Build();
 app.UseRouting();
 
 app.UseCors(myCorsPolicy);
+
+
 
 app.UseEndpoints(routes =>
 {

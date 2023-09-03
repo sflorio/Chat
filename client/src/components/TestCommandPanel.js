@@ -2,7 +2,7 @@ import { HttpTransportType } from '@microsoft/signalr';
 import { React, useState } from 'react';
 import {signalRService} from '../services/SignalRService'
 import Table from 'react-bootstrap/Table';
-
+import Select from 'react-select';
 
 const TestCommandPanel = () => {
     const [test1Status, setTest1Status ] = useState(false);
@@ -17,8 +17,9 @@ const TestCommandPanel = () => {
     const [test10Status, setTest10Status ] = useState(false);
     const [test11Status, setTest11Status ] = useState(false);
     const [test12Status, setTest12Status ] = useState(false);
+    const [transportProtocol, setTransportProtocol ] = useState(HttpTransportType.LongPolling);
 
-    const service = new signalRService(HttpTransportType.LongPolling);
+    const service = new signalRService(transportProtocol);
 
     let tenCharMessage = "asdfghhjkwe";
     let oneHundredCharMessage = "asdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkweasdfghhjkwe";
@@ -97,6 +98,17 @@ const TestCommandPanel = () => {
     let getStatusDescription = (val) => <span className={getStatusClassByVal(val)}>{getStatusDescriptionByVal(val)}</span> 
 
     return (
+        <>
+        <div>
+            <h1>Tablero de ejecución de pruebas</h1>
+            <br></br>
+            <label>Elija un protocolo: &nbsp;</label>
+            <select onChange={(e) => setTransportProtocol(e.target.value)}>
+                <option value={HttpTransportType.LongPolling}>LongPolling</option>
+                <option value={HttpTransportType.WebSockets}>WebSockets</option>
+            </select>
+            <br></br>
+        </div>        
         <table class="table"> 
             <thead>
                 <tr>
@@ -183,6 +195,7 @@ const TestCommandPanel = () => {
             </tr>
             </tbody>
         </table>
+        </>
     );
 }
 

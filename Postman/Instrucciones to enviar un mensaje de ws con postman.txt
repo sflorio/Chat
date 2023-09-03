@@ -1,0 +1,9 @@
+For testing using postman fist it's necessary co connect to the ws server.
+Then send next message to the server.
+{"protocol":"json","version":1}
+
+If this was receiver correctly type 6 messages will start comming
+Then to send a message this is the format the message needs to follow;
+{"arguments":[{"name":"seb asdada","message":"asdsds"}],"target":"send","type":1}
+
+http://localhost:5153

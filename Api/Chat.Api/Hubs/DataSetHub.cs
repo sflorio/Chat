@@ -10,7 +10,7 @@ namespace Chat.Api.Hubs
         public async Task Send(ChatMessage message)
         {
             // Call the broadcastMessage method to update clients.
-            await Clients.All.SendAsync("broadcastMessage", message);
+            await Clients.All.SendAsync("broadcastDataset", message);
         }
     }
 }
