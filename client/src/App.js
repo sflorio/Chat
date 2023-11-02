@@ -1,11 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import './boostrap.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Chat from './components/Chat';
-import Navbar from "./components/Menu"
-
-import TestCommandPanel from './components/TestCommandPanel';
+import Chat from './componentes/Chat';
+import Navbar from "./componentes/Menu"
+import TestCommandPanel from './componentes/TestCommandPanel';
 
 function App() {
   return (

@@ -29,12 +29,9 @@ app.UseRouting();
 app.UseCors(myCorsPolicy);
 
 
-
 app.UseEndpoints(routes =>
 {
     routes.MapHub<ChatHub>("/chatHub");
-    routes.MapHub<FileHub>("/fileHub");
-    routes.MapHub<DataSetHub>("/dataSetHub");
 });
 
 app.Run();
